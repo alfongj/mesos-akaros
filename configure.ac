@@ -167,6 +167,9 @@ case "${target_os}" in
   darwin*)
     OS_NAME=darwin
     ;;
+  ros*)
+    OS_NAME=ros
+    ;;
   *)
     AC_MSG_ERROR("Mesos is currently unsupported on your platform.")
 esac
@@ -260,7 +263,7 @@ fi
 
 
 # Check for pthreads (uses m4/acx_pthread.m4).
-ACX_PTHREAD([], [AC_MSG_ERROR([failed to find pthreads])])
+# ACX_PTHREAD([], [AC_MSG_ERROR([failed to find pthreads])])
 
 
 # Check for libunwind, and link it in if present.
@@ -605,19 +608,19 @@ fi
 
 AM_CONDITIONAL([HAS_PYTHON], [test "x$has_python" = "xyes"])
 
-AC_CHECK_LIB([z], [gzread], [],
-             [AC_MSG_ERROR([cannot find libz
--------------------------------------------------------------------
-libz is required for mesos to build.
--------------------------------------------------------------------
-])])
-
-AC_CHECK_LIB([curl], [curl_global_init], [],
-             [AC_MSG_ERROR([cannot find libcurl
--------------------------------------------------------------------
-libcurl is required for mesos to build.
--------------------------------------------------------------------
-])])
+# AC_CHECK_LIB([z], [gzread], [],
+#              [AC_MSG_ERROR([cannot find libz
+# -------------------------------------------------------------------
+# libz is required for mesos to build.
+# -------------------------------------------------------------------
+# ])])
+# 
+# AC_CHECK_LIB([curl], [curl_global_init], [],
+#              [AC_MSG_ERROR([cannot find libcurl
+# -------------------------------------------------------------------
+# libcurl is required for mesos to build.
+# -------------------------------------------------------------------
+# ])])
 
 
 AM_CONDITIONAL([WITH_INCLUDED_ZOOKEEPER],
@@ -650,12 +653,12 @@ fi
 # TODO(benh): Also check for md5 support so we can use the CRAM-MD5
 # mechanism. We can likely do a AC_CHECK_LIB looking for a particular
 # function only provided if md5 support is present.
-AC_CHECK_LIB([sasl2], [sasl_done], [],
-             [AC_MSG_ERROR([cannot find libsasl2
--------------------------------------------------------------------
-We need libsasl2 for authentication!
--------------------------------------------------------------------
-])])
+# AC_CHECK_LIB([sasl2], [sasl_done], [],
+#              [AC_MSG_ERROR([cannot find libsasl2
+# -------------------------------------------------------------------
+# We need libsasl2 for authentication!
+# -------------------------------------------------------------------
+# ])])
 
 
 AM_CONDITIONAL([GIT_REPO], [test -d ${srcdir}"/.git"])

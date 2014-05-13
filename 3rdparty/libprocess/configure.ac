@@ -164,7 +164,7 @@ fi
 
 
 # Check for pthreads (uses m4/acx_pthread.m4).
-ACX_PTHREAD([], [AC_MSG_ERROR([failed to find pthreads])])
+# ACX_PTHREAD([], [AC_MSG_ERROR([failed to find pthreads])])
 
 
 AM_CONDITIONAL([HAS_GPERFTOOLS], [test "x$gperftools" = "xyes"])
