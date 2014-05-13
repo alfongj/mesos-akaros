@@ -1,0 +1,18 @@
+# Commands to be run: (From mesos/)
+
+./bootstrap
+
+mkdir build
+cd build
+
+../configure --host x86_64-ros  --disable-java --disable-python --without-zlib
+
+# This will may several files, and you will have to manually edit config.sub files
+
+make CXXFLAGS="-DHAVE_PTHREAD -std=gnu++0x" LDFLAGS=-lpthread
+
+# This will also fail several times, you will have to progressively fix some of 
+# the files with the versions I committed. You will also need to install the
+# latest version (2.5.0 or newer) of protocol buffers
+
+

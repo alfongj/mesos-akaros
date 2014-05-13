@@ -118,7 +118,7 @@ $(LIBEV)/libev.la: $(LIBEV)-stamp
 $(PROTOBUF)/src/protoc $(PROTOBUF)/src/libprotobuf.la: $(PROTOBUF)-build-stamp
 
 $(PROTOBUF)-build-stamp: $(PROTOBUF)-stamp
-	cd $(PROTOBUF) && ./configure $(CONFIGURE_ARGS) && \
+	cd $(PROTOBUF) && ./configure $(CONFIGURE_ARGS) --with-protoc=protoc && \
           $(MAKE) $(AM_MAKEFLAGS)
 	touch $@
 
