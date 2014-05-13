@@ -122,8 +122,6 @@ STATE_PROTOS = messages/state.pb.cc messages/state.pb.h
 BUILT_SOURCES += $(STATE_PROTOS)
 CLEANFILES += $(STATE_PROTOS)
 
-# REGISTRY_PROTOS = master/registry.pb.cc master/registry.pb.h
-
 # BUILT_SOURCES += $(REGISTRY_PROTOS)
 # CLEANFILES += $(REGISTRY_PROTOS)
 
@@ -152,8 +150,7 @@ noinst_LTLIBRARIES += libmesos_no_3rdparty.la
 
 nodist_libmesos_no_3rdparty_la_SOURCES =				\
   $(CXX_PROTOS)								\
-  $(MESSAGES_PROTOS)							# \
-#  $(REGISTRY_PROTOS)
+  $(MESSAGES_PROTOS)
 
 libmesos_no_3rdparty_la_SOURCES =					\
 	sasl/authenticatee.hpp						\
@@ -162,15 +159,6 @@ libmesos_no_3rdparty_la_SOURCES =					\
 	sasl/auxprop.cpp						\
 	sched/sched.cpp							\
 	local/local.cpp							\
-#	master/contender.cpp						\
-#	master/constants.cpp						\
-#	master/detector.cpp						\
-#	master/drf_sorter.cpp						\
-#	master/http.cpp							\
-#	master/master.cpp						\
-#	master/registry.hpp						\
-#	master/registry.proto                                           \
-#	master/registrar.cpp						\
 	slave/constants.cpp						\
 	slave/gc.cpp							\
 	slave/monitor.cpp						\
@@ -226,14 +214,6 @@ libmesos_no_3rdparty_la_SOURCES += common/attributes.hpp		\
 	linux/cgroups.hpp						\
 	linux/fs.hpp local/flags.hpp local/local.hpp			\
 	logging/flags.hpp logging/logging.hpp				\
-#	master/allocator.hpp						\
-#	master/contender.hpp						\
-#	master/constants.hpp						\
-#	master/detector.hpp						\
-#	master/drf_sorter.hpp master/flags.hpp				\
-#	master/hierarchical_allocator_process.hpp			\
-#	master/registrar.hpp						\
-#	master/master.hpp master/sorter.hpp				\
 	messages/messages.hpp slave/constants.hpp			\
 	slave/containerizer/cgroups_launcher.hpp			\
 	slave/containerizer/containerizer.hpp				\
@@ -382,13 +362,6 @@ endif
 
 libmesos_la_LIBADD += ../$(LIBPROCESS)/libprocess.la
 
-
-# Binaries.
-# sbin_PROGRAMS += mesos-master
-# mesos_master_SOURCES = master/main.cpp
-# mesos_master_CPPFLAGS = $(MESOS_CPPFLAGS)
-# mesos_master_LDADD = libmesos.la
-
 sbin_PROGRAMS += mesos-slave
 mesos_slave_SOURCES = slave/main.cpp
 mesos_slave_CPPFLAGS = $(MESOS_CPPFLAGS)
@@ -446,90 +419,17 @@ dist_mesospythonpkglibexec_SCRIPTS =					\
   cli/python/mesos/futures.py						\
   cli/python/mesos/http.py
 
-# Need to distribute/install webui javascript. We use 'pkgdatadir'
-# instead of 'datadir' as the install directory so we get the the
-# package name (i.e., 'mesos') as part of the path (i.e.,
-# /path/to/mesos/webui versus something like /path/to/webui). Note
-# that 'datadir' (e.g., /usr/local/share) is for read-only "data" and
-# 'localstatedir' (e.g., /usr/local/var) is for modifiable "data".
-# nobase_dist_pkgdata_DATA +=						\
-#   webui/master/static/js/controllers.js					\
-#   webui/master/static/js/app.js						\
-#   webui/master/static/js/services.js					\
-#   webui/master/static/js/jquery.pailer.js
-
-# Need to distribute/install webui CSS.
-# nobase_dist_pkgdata_DATA +=						\
-#   webui/master/static/css/bootstrap-3.0.3.min.css			\
-#   webui/master/static/css/mesos.css
-
-# Need to distribute/install webui HTML.
-# nobase_dist_pkgdata_DATA +=						\
-#   webui/master/static/browse.html					\
-#   webui/master/static/framework.html					\
-#   webui/master/static/frameworks.html					\
-#   webui/master/static/home.html						\
-#   webui/master/static/index.html					\
-#   webui/master/static/offers.html					\
-#   webui/master/static/pailer.html					\
-#   webui/master/static/slave.html					\
-#   webui/master/static/slave_executor.html				\
-#   webui/master/static/slave_framework.html				\
-#   webui/master/static/slaves.html					\
-#   webui/master/static/directives/timestamp.html				\
-#   webui/master/static/directives/pagination.html			\
-#   webui/master/static/directives/tableHeader.html
-
-
-# Need to distribute/install webui images.
-# nobase_dist_pkgdata_DATA +=						\
-#   webui/master/static/img/loading.gif					\
-#   webui/master/static/ico/favicon.ico
-
-# Need to distribute/install webui fonts.
-# nobase_dist_pkgdata_DATA +=						\
-#   webui/master/static/fonts/glyphicons-halflings-regular.eot		\
-#   webui/master/static/fonts/glyphicons-halflings-regular.svg		\
-#   webui/master/static/fonts/glyphicons-halflings-regular.ttf		\
-#   webui/master/static/fonts/glyphicons-halflings-regular.woff
-
-# Need to distribute/install third-party javascript.
-# nobase_dist_pkgdata_DATA +=						\
-#   webui/master/static/js/angular-1.2.3.js				\
-#   webui/master/static/js/angular-1.2.3.min.js				\
-#   webui/master/static/js/angular-route-1.2.3.js				\
-#   webui/master/static/js/angular-route-1.2.3.min.js			\
-#   webui/master/static/js/ui-bootstrap-tpls-0.9.0.js			\
-#   webui/master/static/js/ui-bootstrap-tpls-0.9.0.min.js			\
-#   webui/master/static/js/underscore-1.4.3.js				\
-#   webui/master/static/js/underscore-1.4.3.min.js			\
-#   webui/master/static/js/jquery-1.7.1.js				\
-#   webui/master/static/js/jquery-1.7.1.min.js				\
-#   webui/master/static/js/relative-date.js				\
-#   webui/master/static/js/zeroclipboard-1.1.7.js				\
-#   webui/master/static/js/zeroclipboard-1.1.7.min.js			\
-#   webui/master/static/obj/zeroclipboard-1.1.7.swf
-
-# And the deploy related stuff.
-# nodist_sbin_SCRIPTS += deploy/mesos-daemon.sh				\
-#   deploy/mesos-start-cluster.sh deploy/mesos-start-masters.sh		\
-#   deploy/mesos-start-slaves.sh deploy/mesos-stop-cluster.sh		\
-#   deploy/mesos-stop-masters.sh deploy/mesos-stop-slaves.sh
-
-# NOTE(alfongj) Added this instead of the prior commented block.
 nodist_sbin_SCRIPTS += deploy/mesos-daemon.sh				\
   deploy/mesos-start-cluster.sh	\
   deploy/mesos-start-slaves.sh deploy/mesos-stop-cluster.sh		\
   deploy/mesos-stop-slaves.sh
 
 nobase_pkglocalstate_DATA += deploy/mesos-deploy-env.sh.template	\
-#                              deploy/mesos-master-env.sh.template	\
                              deploy/mesos-slave-env.sh.template
 
 # Need to explicitly add this because by default DATA files are not
 # included in distributions.
 EXTRA_DIST += deploy/mesos-deploy-env.sh.template			\
-#               deploy/mesos-master-env.sh.template			\
               deploy/mesos-slave-env.sh.template
 
 # Java related files are listed outside if HAS_JAVA so we can add them
@@ -866,8 +766,6 @@ mesos_tests_SOURCES =				\
   tests/log_tests.cpp				\
   tests/logging_tests.cpp			\
   tests/main.cpp				\
-#   tests/master_contender_detector_tests.cpp	\
-#   tests/master_tests.cpp			\
   tests/mesos.cpp				\
   tests/monitor_tests.cpp			\
   tests/paths_tests.cpp				\
